@@ -3,12 +3,15 @@ var a = require('assert');
 
 var testValues = Array.apply(Array, new Array(1000)).map(Math.random);
 
-var percentile = new Percentile(1000, testValues);
+var percentile = new Percentile(testValues, 1000);
+
+console.log(testValues);
 
 describe('percentile', function(){
 
-	it('should interpolate values', function(){
-		a.equal(percentile.percentile(10), 0.1);
+	it('should be roughly correct', function(){
+		a(percentile.percentile(100) >= 0.99);
+		a(percentile.percentile(10) <= 0.1);
 	});
 
 });
